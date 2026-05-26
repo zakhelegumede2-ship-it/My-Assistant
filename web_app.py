@@ -1070,5 +1070,4 @@ if __name__ == '__main__':
     print("\n💬 AI Chat tab is ready to use!")
     print("\nPress Ctrl+C to stop.\n")
     
-   if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
