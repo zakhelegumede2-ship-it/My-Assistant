@@ -1,0 +1,7 @@
+venv/
+.env
+telegram_chat_id.txt
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+*.pyc

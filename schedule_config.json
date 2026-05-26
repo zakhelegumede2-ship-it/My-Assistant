@@ -1,0 +1,9 @@
+{
+    "morning_briefing": true,
+    "morning_time": "08:00",
+    "evening_summary": true,
+    "evening_time": "21:00",
+    "last_morning": null,
+    "last_evening": null,
+    "timezone": "UTC"
+}

@@ -1,0 +1,30 @@
+{
+    "income": [
+        {
+            "amount": 30000.0,
+            "source": "monthly salary",
+            "date": "2026-05-25"
+        }
+    ],
+    "expenses": [
+        {
+            "amount": 1500.0,
+            "category": "monthly",
+            "description": "- march rent payment",
+            "date": "2026-05-25"
+        },
+        {
+            "amount": 200.0,
+            "category": "food",
+            "description": "weekly",
+            "date": "2026-05-25"
+        },
+        {
+            "amount": 50.0,
+            "category": "entertainment",
+            "description": "- netflix subscription",
+            "date": "2026-05-25"
+        }
+    ],
+    "budgets": {}
+}

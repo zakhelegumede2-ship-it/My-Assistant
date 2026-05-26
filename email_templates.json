@@ -1,0 +1,37 @@
+{
+    "meeting": {
+        "name": "Meeting Request",
+        "subject": "Meeting Request: [Topic]",
+        "body": "Hi [Name],\n\nI hope this email finds you well. I'd like to schedule a meeting to discuss [Topic].\n\nWould [Date] at [Time] work for you? If not, please let me know what time works best.\n\nLooking forward to hearing from you.\n\nBest regards,\n[Your Name]"
+    },
+    "followup": {
+        "name": "Follow Up",
+        "subject": "Following Up: [Topic]",
+        "body": "Hi [Name],\n\nI'm following up on my previous email regarding [Topic].\n\nI wanted to check if you've had a chance to review it and if you have any questions or feedback.\n\nPlease let me know if you need any additional information.\n\nBest regards,\n[Your Name]"
+    },
+    "thankyou": {
+        "name": "Thank You",
+        "subject": "Thank You - [Topic]",
+        "body": "Hi [Name],\n\nThank you so much for [what they did]. I really appreciate you taking the time to help with this.\n\n[Optional: Add a specific detail about what you're thankful for]\n\nThanks again, and I look forward to working with you in the future.\n\nBest regards,\n[Your Name]"
+    },
+    "sickday": {
+        "name": "Sick Day Request",
+        "subject": "Sick Day - [Date]",
+        "body": "Hi [Name],\n\nI'm writing to let you know that I'm not feeling well today and won't be able to come into work.\n\nI'll check my emails when I can and will catch up on anything I miss when I'm back.\n\nPlease let me know if there's anything urgent that needs my attention.\n\nThank you,\n[Your Name]"
+    },
+    "late": {
+        "name": "Running Late",
+        "subject": "Running Late Today",
+        "body": "Hi [Name],\n\nI wanted to let you know that I'm running a bit late this morning due to [reason].\n\nI expect to arrive by [time] and will catch up on anything I miss.\n\nApologies for the inconvenience.\n\nBest,\n[Your Name]"
+    },
+    "introduction": {
+        "name": "Introduction",
+        "subject": "Introduction: [Your Name] & [Their Name]",
+        "body": "Hi [Name],\n\nMy name is [Your Name] and I'm [your role/position].\n\nI'm reaching out because [reason for contacting them].\n\nI'd love to connect and learn more about [topic or their work].\n\nWould you be available for a quick chat sometime next week?\n\nBest regards,\n[Your Name]"
+    },
+    "appreciation_": {
+        "name": "Appreciation ",
+        "subject": "Appreciation ",
+        "body": "Good Day! Hope this mail finds you well, I just wanted to take this moment and tell you how much of an honoror it has been to work with you and your team on this lovely project [ Death of a whistlblower]. we and shared so much skills throughtout the project and we wish that we played a valuble role in this journey and delivered to you expections if not please reachout to us and meantioned what you werent happy with and we promise to work on it future collaborations. please have yourself an amazing week and stay blessed \n\nregards\nZH Gumede \n\ndone"
+    }
+}

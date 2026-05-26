@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+*.json
+telegram_chat_id.txt
+token.pickle
+credentials.json
+PA/
