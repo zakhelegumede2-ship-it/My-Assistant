@@ -6,6 +6,7 @@ Saves your data permanently so it never disappears!
 import os
 from dotenv import load_dotenv
 from datetime import datetime
+import json
 
 load_dotenv()
 
@@ -14,7 +15,7 @@ class Database:
         url = os.getenv('SUPABASE_URL')
         key = os.getenv('SUPABASE_KEY')
         
-        if not url or not key:
+        if not url or not key or url == 'your-supabase-url' or key == 'your-supabase-key':
             print("⚠️ Supabase not configured. Using local storage only.")
             self.client = None
             return
@@ -27,169 +28,140 @@ class Database:
             print(f"⚠️ Database connection failed: {e}")
             self.client = None
     
-    # ============================================
-    # REMINDERS
-    # ============================================
-    
     def save_reminders(self, reminders_data):
-        """Save all reminders to database"""
         if not self.client:
             return False
-        
         try:
             for reminder in reminders_data:
                 reminder_id = reminder.get('text', '').replace(' ', '_').lower()
-                self.client.table('reminders').upsert({
+                data = {
                     'id': reminder_id,
-                    'text': reminder['text'],
-                    'completed': reminder.get('completed', False),
-                    'created_at': reminder.get('created_at', datetime.now().isoformat()),
-                    'completed_at': reminder.get('completed_at', None)
-                }).execute()
+                    'text': str(reminder['text']),
+                    'completed': bool(reminder.get('completed', False)),
+                    'created_at': str(reminder.get('created_at', datetime.now().isoformat())),
+                    'completed_at': str(reminder.get('completed_at')) if reminder.get('completed_at') else None
+                }
+                self.client.table('reminders').upsert(data).execute()
             return True
         except Exception as e:
-            print(f"Database save error: {e}")
+            print(f"DB save error: {e}")
             return False
     
     def load_reminders(self):
-        """Load all reminders from database"""
         if not self.client:
             return None
-        
         try:
             response = self.client.table('reminders').select('*').execute()
             reminders = []
             for row in response.data:
                 reminders.append({
-                    'text': row['text'],
-                    'completed': row.get('completed', False),
-                    'created_at': row.get('created_at', ''),
-                    'completed_at': row.get('completed_at', None)
+                    'text': str(row['text']),
+                    'completed': bool(row.get('completed', False)),
+                    'created_at': str(row.get('created_at', '')),
+                    'completed_at': str(row.get('completed_at')) if row.get('completed_at') else None
                 })
             return reminders
         except Exception as e:
-            print(f"Database load error: {e}")
+            print(f"DB load error: {e}")
             return None
     
     def add_reminder(self, text):
-        """Add a single reminder"""
         if not self.client:
             return False
-        
         try:
             reminder_id = text.replace(' ', '_').lower()
             self.client.table('reminders').insert({
                 'id': reminder_id,
-                'text': text,
+                'text': str(text),
                 'completed': False,
-                'created_at': datetime.now().isoformat()
+                'created_at': str(datetime.now().isoformat())
             }).execute()
             return True
         except Exception as e:
-            print(f"Database add error: {e}")
+            print(f"DB add error: {e}")
             return False
     
     def update_reminder(self, text, completed):
-        """Update a reminder's completion status"""
         if not self.client:
             return False
-        
         try:
             reminder_id = text.replace(' ', '_').lower()
             self.client.table('reminders').update({
-                'completed': completed,
-                'completed_at': datetime.now().isoformat() if completed else None
+                'completed': bool(completed),
+                'completed_at': str(datetime.now().isoformat()) if completed else None
             }).eq('id', reminder_id).execute()
             return True
         except Exception as e:
-            print(f"Database update error: {e}")
+            print(f"DB update error: {e}")
             return False
     
     def delete_reminder(self, text):
-        """Delete a reminder"""
         if not self.client:
             return False
-        
         try:
             reminder_id = text.replace(' ', '_').lower()
             self.client.table('reminders').delete().eq('id', reminder_id).execute()
             return True
         except Exception as e:
-            print(f"Database delete error: {e}")
+            print(f"DB delete error: {e}")
             return False
-    
-    # ============================================
-    # FINANCE
-    # ============================================
     
     def save_finances(self, finance_data):
-        """Save all finance data to database"""
         if not self.client:
             return False
-        
         try:
-            # First clear existing data
             self.client.table('finances').delete().neq('id', '0').execute()
             
-            # Save income
             for item in finance_data.get('income', []):
-                item_id = f"income_{datetime.now().timestamp()}_{item.get('source', 'unknown')}"
+                item_id = f"inc_{datetime.now().timestamp()}"
                 self.client.table('finances').insert({
                     'id': item_id,
                     'type': 'income',
                     'amount': float(item['amount']),
-                    'category': item.get('source', 'Unknown'),
-                    'description': item.get('description', ''),
-                    'date': item.get('date', datetime.now().strftime('%Y-%m-%d'))
+                    'category': str(item.get('source', 'Unknown')),
+                    'description': str(item.get('description', '')),
+                    'date': str(item.get('date', datetime.now().strftime('%Y-%m-%d')))
                 }).execute()
             
-            # Save expenses
             for item in finance_data.get('expenses', []):
-                item_id = f"expense_{datetime.now().timestamp()}_{item.get('category', 'other')}"
+                item_id = f"exp_{datetime.now().timestamp()}"
                 self.client.table('finances').insert({
                     'id': item_id,
                     'type': 'expense',
                     'amount': float(item['amount']),
-                    'category': item.get('category', 'Other'),
-                    'description': item.get('description', ''),
-                    'date': item.get('date', datetime.now().strftime('%Y-%m-%d'))
+                    'category': str(item.get('category', 'Other')),
+                    'description': str(item.get('description', '')),
+                    'date': str(item.get('date', datetime.now().strftime('%Y-%m-%d')))
                 }).execute()
             
             return True
         except Exception as e:
-            print(f"Database save error: {e}")
+            print(f"DB save error: {e}")
             return False
     
     def load_finances(self):
-        """Load all finance data from database"""
         if not self.client:
             return None
-        
         try:
             response = self.client.table('finances').select('*').execute()
-            
             income = []
             expenses = []
             
             for row in response.data:
                 item = {
                     'amount': float(row['amount']),
-                    'date': row.get('date', '')
+                    'date': str(row.get('date', ''))
                 }
                 
                 if row['type'] == 'income':
-                    item['source'] = row.get('category', 'Unknown')
+                    item['source'] = str(row.get('category', 'Unknown'))
                     income.append(item)
                 else:
-                    item['category'] = row.get('category', 'Other')
-                    item['description'] = row.get('description', '')
+                    item['category'] = str(row.get('category', 'Other'))
+                    item['description'] = str(row.get('description', ''))
                     expenses.append(item)
             
-            return {
-                'income': income,
-                'expenses': expenses,
-                'budgets': {}
-            }
+            return {'income': income, 'expenses': expenses, 'budgets': {}}
         except Exception as e:
-            print(f"Database load error: {e}")
+            print(f"DB load error: {e}")
             return None
